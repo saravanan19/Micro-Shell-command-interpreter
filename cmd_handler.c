@@ -671,42 +671,7 @@ int killCmd(Cmd c){
 	return kill(atoi(c->args[1]+1), SIGKILL);
 }
 
-void jobsCmd(){
 
-	/*
-	 * Code referred from stackoverflow
-	 * http://stackoverflow.com/questions/1723002/how-to-list-all-subdirectories-in-a-given-directory-in-c
-	 */
-
-    struct dirent *subdir = NULL;
-    char path[6] = "/proc";
-    DIR *dir = opendir(path);
-    int path_len = strlen(path);
-
-    while ((subdir = readdir(dir)) != NULL)
-    {
-
-        struct stat fstat;
-        char full_name[PATH_MAX + 1];
-        strcpy(full_name, path);
-        if (full_name[path_len - 1] != '/')
-            strcat(full_name, "/");
-        strcat(full_name, subdir->d_name);
-
-        if (stat(full_name, &fstat) < 0)
-            continue;
-        if (S_ISDIR(fstat.st_mode))
-        {
-        	int isPid=1;
-        	isPid = strtol(subdir->d_name, (char **)NULL, 10);
-        	if(isPid)
-        		printf("%s\n", subdir->d_name);
-        }
-    }
-    closedir(dir);
-    return ;
-
-}
 
 void signal_handler(){
 	printf("Core Dumped\n");
